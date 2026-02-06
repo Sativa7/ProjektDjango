@@ -1,0 +1,9 @@
+# zwróć uwagę na faktyczną nazwę Twojego folderu środowiska wirtualnego
+venv/
+*.pyc
+**/__pycache__/
+# jeżeli nie chcesz wersjonować bazy danych SQLite
+db.sqlite3
+# może być też przydatne ignorowanie plików IDE
+# ale to zależy czy w poniższym folderze nie ma już pliku .gitignore
+.idea/
