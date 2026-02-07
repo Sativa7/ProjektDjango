@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{% block title %}{% endblock %}</title>
+</head>
+<body>
+
+    <div id="header">
+        <h1>Kronika rodzinna</h1>
+    </div>
+
+    <hr>
+
+    <div id="content">
+        {% block content %}
+        {% endblock %}
+    </div>
+
+    <hr>
+
+    <div id="footer">
+        <p>Projekt Django — Kronika rodzinna</p>
+    </div>
+
+</body>
+</html>

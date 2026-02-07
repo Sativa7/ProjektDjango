@@ -1,0 +1,19 @@
+{% extends "wpisy/base.html" %}
+
+{% block title %}
+{{ entry.title }}
+{% endblock %}
+
+{% block content %}
+<h2>{{ entry.title }}</h2>
+
+<p><strong>Data:</strong> {{ entry.event_date }}</p>
+
+<p>{{ entry.text }}</p>
+
+<p>
+    <a href="{% url 'entries_by_category' entry.category.slug %}">
+        ← Wróć do kategorii
+    </a>
+</p>
+{% endblock %}

@@ -1,0 +1,20 @@
+{% extends "wpisy/base.html" %}
+
+{% block title %}
+Lista kategorii
+{% endblock %}
+
+{% block content %}
+<h2>Kategorie kroniki</h2>
+
+{% for category in categories %}
+    <p>
+        <a href="{% url 'entries_by_category' category.slug %}">
+            {{ category.name }}
+        </a>
+    </p>
+    <p>{{ category.description }}</p>
+    <hr>
+{% endfor %}
+
+{% endblock %}
