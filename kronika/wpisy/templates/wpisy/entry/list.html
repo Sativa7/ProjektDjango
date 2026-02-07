@@ -1,16 +1,37 @@
 {% extends "wpisy/base.html" %}
 
-{% block title %}Wpisy kroniki{% endblock %}
+{% block title %}Wydarzenia{% endblock %}
 
 {% block content %}
-<h2>Wpisy kroniki</h2>
+<div class="entries-container">
 
-{% for entry in entries %}
-    <p><strong>{{ entry.title }}</strong></p>
-    <p>{{ entry.text|truncatewords:20 }}</p>
-    <hr>
-{% empty %}
-    <p>Brak wpisów w kronice.</p>
-{% endfor %}
+    {% for entry in entries %}
+        <a href="{% url 'entry_detail' entry.slug %}" class="entry-card">
 
+            <div class="entry-image">
+                {% if entry.photos.first %}
+                    <img src="{{ entry.photos.first.image.url }}" alt="{{ entry.title }}">
+                {% else %}
+                    <div class="image-placeholder"></div>
+                {% endif %}
+            </div>
+
+            <div class="entry-content">
+                <div class="entry-meta">
+                    <span>📅 {{ entry.event_date }}</span>
+                    {% if entry.created_by %}
+                        <span>👤 {{ entry.created_by }}</span>
+                    {% endif %}
+                </div>
+
+                <h2>{{ entry.title }}</h2>
+                <p>{{ entry.text|truncatewords:30 }}</p>
+            </div>
+
+        </a>
+    {% empty %}
+        <p>Brak wydarzeń.</p>
+    {% endfor %}
+
+</div>
 {% endblock %}

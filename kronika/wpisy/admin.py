@@ -1,11 +1,6 @@
 from django.contrib import admin
 from .models import Category, Person, Place, Entry, Photo
 
-#admin.site.register(Category)
-#admin.site.register(Person)
-#admin.site.register(Place)
-#admin.site.register(Entry)
-admin.site.register(Photo)
 
 @admin.register(Entry)
 class EntryAdmin(admin.ModelAdmin):
@@ -17,20 +12,35 @@ class EntryAdmin(admin.ModelAdmin):
 
     prepopulated_fields = {"slug": ("title",)}
 
+    @admin.display(description="Kategoria / miejsce")
     def category_with_place(self, obj):
-        if obj.place:
+        """
+        Bezpieczne wyświetlanie kategorii i miejsca
+        (obsługa NULL / None)
+        """
+        if obj.category and obj.place:
             return f"{obj.category.name} ({obj.place.name})"
-        return obj.category.name
+        if obj.category:
+            return obj.category.name
+        return "—"
+
 
 @admin.register(Category)
 class CategoryAdmin(admin.ModelAdmin):
-    list_display = ("name",)
+    list_display = ("name", "slug")
+    prepopulated_fields = {"slug": ("name",)}
+
 
 @admin.register(Person)
 class PersonAdmin(admin.ModelAdmin):
     list_display = ("name",)
 
+
 @admin.register(Place)
 class PlaceAdmin(admin.ModelAdmin):
     list_display = ("name",)
 
+
+@admin.register(Photo)
+class PhotoAdmin(admin.ModelAdmin):
+    list_display = ("id", "entry")

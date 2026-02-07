@@ -1,28 +1,36 @@
 {% load static %}
 <!DOCTYPE html>
-<html>
+<html lang="pl">
 <head>
-    <title>{% block title %}{% endblock %}</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{% block title %}Kronika rodzinna{% endblock %}</title>
+
     <link rel="stylesheet" href="{% static 'css/posts.css' %}">
 </head>
 <body>
 
-    <div id="header">
-        <h1>Kronika rodzinna</h1>
+<header class="navbar">
+    <div class="navbar-inner">
+        <div class="navbar-left">
+            <h1 class="logo">
+                <a href="{% url 'entry_list' %}">Kronika rodzinna</a>
+            </h1>
+        </div>
+
+        <nav class="navbar-right">
+            <a href="{% url 'entry_list' %}">Wydarzenia</a>
+            <a href="{% url 'category_list' %}">Kategorie</a>
+            <a class="btn-primary" href="{% url 'admin:index' %}">Zaloguj się</a>
+        </nav>
     </div>
+</header>
 
-    <hr>
-
-    <div id="content">
-        {% block content %}
-        {% endblock %}
-    </div>
-
-    <hr>
-
-    <div id="footer">
-        <p>Projekt Django — Kronika rodzinna</p>
-    </div>
+<main class="page-content">
+    {% block content %}
+    {% endblock %}
+</main>
 
 </body>
+
 </html>
