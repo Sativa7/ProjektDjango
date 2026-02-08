@@ -79,5 +79,13 @@ class Entry(models.Model):
         ordering = ['-created_at']
 
 class Photo(models.Model):
-    entry = models.ForeignKey(Entry, on_delete=models.CASCADE)
-    description = models.CharField(max_length=200, blank=True)
+    entry = models.ForeignKey(
+        "Entry",
+        on_delete=models.CASCADE,
+        related_name="photos"
+    )
+    image = models.ImageField(upload_to="entries/")
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"Zdjęcie do: {self.entry.title}"
