@@ -1,19 +1,43 @@
 {% extends "wpisy/base.html" %}
 
-{% block title %}
-{{ entry.title }}
-{% endblock %}
+{% block title %}{{ entry.title }}{% endblock %}
 
 {% block content %}
-<h2>{{ entry.title }}</h2>
+<div class="entries-container">
 
-<p><strong>Data:</strong> {{ entry.event_date }}</p>
+    <article class="entry-card">
 
-<p>{{ entry.text }}</p>
+        <div class="entry-image">
+            {% if entry.photos.first %}
+                <img src="{{ entry.photos.first.image.url }}" alt="{{ entry.title }}">
+            {% else %}
+                <div class="image-placeholder"></div>
+            {% endif %}
+        </div>
 
-<p>
-    <a href="{% url 'entries_by_category' entry.category.slug %}">
-        ← Wróć do kategorii
-    </a>
-</p>
+        <div class="entry-content">
+            <div class="entry-meta">
+                <span>📅 {{ entry.event_date }}</span>
+                {% if entry.created_by %}
+                    <span>👤 {{ entry.created_by }}</span>
+                {% endif %}
+                {% if entry.category %}
+                    <span>🏷 {{ entry.category.name }}</span>
+                {% endif %}
+            </div>
+
+            <h2>{{ entry.title }}</h2>
+
+            <p>{{ entry.text|linebreaks }}</p>
+
+            <p style="margin-top: 20px;">
+                <a href="{% url 'entries_by_category' entry.category.slug %}">
+                    ← Wróć do kategorii
+                </a>
+            </p>
+        </div>
+
+    </article>
+
+</div>
 {% endblock %}

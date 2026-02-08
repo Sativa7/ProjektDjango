@@ -1,24 +1,43 @@
 {% extends "wpisy/base.html" %}
 
-{% block title %}
-{{ category.name }}
-{% endblock %}
+{% block title %}{{ category.name }}{% endblock %}
 
 {% block content %}
-<h2>Wpisy w kategorii: {{ category.name }}</h2>
+<div class="entries-container">
 
-{% if entries %}
-    <ul>
-    {% for entry in entries %}
-        <li>
-            <a href="{% url 'entry_detail' entry.slug %}">
-                {{ entry.title }}
+    <h1 class="page-title">
+        Wpisy w kategorii: {{ category.name }}
+    </h1>
+
+    {% if entries %}
+        {% for entry in entries %}
+            <a href="{% url 'entry_detail' entry.slug %}" class="entry-card">
+
+                <div class="entry-image">
+                    {% if entry.photos.first %}
+                        <img src="{{ entry.photos.first.image.url }}" alt="{{ entry.title }}">
+                    {% else %}
+                        <div class="image-placeholder"></div>
+                    {% endif %}
+                </div>
+
+                <div class="entry-content">
+                    <div class="entry-meta">
+                        <span>📅 {{ entry.event_date }}</span>
+                        {% if entry.created_by %}
+                            <span>👤 {{ entry.created_by }}</span>
+                        {% endif %}
+                    </div>
+
+                    <h2>{{ entry.title }}</h2>
+                    <p>{{ entry.text|truncatechars:180 }}</p>
+                </div>
+
             </a>
-            ({{ entry.event_date }})
-        </li>
-    {% endfor %}
-    </ul>
-{% else %}
-    <p>Brak wpisów w tej kategorii.</p>
-{% endif %}
+        {% endfor %}
+    {% else %}
+        <p>Brak wpisów w tej kategorii.</p>
+    {% endif %}
+
+</div>
 {% endblock %}
